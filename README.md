@@ -1,12 +1,11 @@
-# Sales Performance Dashboard — Excel
+# Sales Performance & Operational Analytics — Excel MIS Dashboard
 
-An interactive sales analysis dashboard built in Microsoft Excel using PivotTables, PivotCharts, and a consolidated dashboard view. The project takes raw transactional sales data and turns it into a single-screen executive summary covering monthly trends, salesperson performance, product category share, and profit by city.
+## 📊 Project Overview
 
-## Overview
+This project demonstrates an end-to-end Management Information System (MIS) data pipeline built entirely within Microsoft Excel. It converts a raw, unorganized flat-file of transactional sales rows into a dynamic, single-page executive dashboard tracking **$17,989** in total revenue across regions, products, salespeople, and time.
 
-The source data is a year of order-level transactions (one row per order) containing date, region, city, product category, product, quantity, unit price, total price, and salesperson. From this raw table, five PivotTables/PivotCharts were built and then combined into one dashboard sheet.
+## 🗂️ Workbook Structure
 
-**Workbook tabs:**
 | Sheet | Purpose |
 |---|---|
 | `Dashboard` | Consolidated view of all charts and the product summary table |
@@ -17,38 +16,57 @@ The source data is a year of order-level transactions (one row per order) contai
 | `Sales Profit by City` | PivotTable + pie chart of revenue share by city |
 | `Sales by Product Type` | PivotTable summary table (quantity by product), embedded in the dashboard |
 
-## Build process
+## 🔄 Data Transformation: From Raw Rows to Executive Insights
 
-1. **Prep the data** — Converted the raw range (`A1:I23` and beyond) into a formatted Excel Table to support dynamic PivotTable refresh and chart creation.
-2. **Derive a Month field** — Inserted a new column to the left of `Region`, named it `Month`, and used `=TEXT(A2,"mmm")` to extract a three-letter month label from each order date, then filled it down the table.
-3. **Sales by Month** — Built a PivotTable (`TotalPrice` → Values, `Month` → Rows) on a new sheet named *Sales by Month*. Formatted the values as Currency with 0 decimal places, then inserted a line chart next to the PivotTable. Adjusted the chart's vertical axis minimum from 0 to 500 so the monthly trend line is easier to read.
-4. **Sales by Salesperson** — Built a second PivotTable (`TotalPrice` → Values, `Salesperson` → Rows), formatted as currency, and sorted largest to smallest. Inserted a clustered bar chart and set the vertical axis to display categories in reverse order so the top performer appears at the top of the chart.
-5. **Items Sold by Category** — Built a PivotTable (`Quantity` → Values, `Category` → Rows) and changed the value display to "% of Grand Total." Visualized it as a pie chart showing each category's share of total units sold.
-6. **Sales Profit by City** — Built a PivotTable (`TotalPrice` → Values, `City` → Rows) and visualized it as a pie chart showing each city's share of total revenue.
-7. **Sales by Product Type** — Built a final PivotTable (`Quantity` → Values, `Product` → Rows) on its own sheet to use as a supporting summary table on the dashboard.
-8. **Assemble the dashboard** — Created a new sheet, selected the entire sheet (Ctrl+A) and applied a uniform fill color as a clean background, then placed the Sales by Month, Sales by Salesperson, Items Sold by Category, and Sales Profit by City charts onto it, along with a copy of the Sales by Product Type table.
+**1. The Input (Raw Transactional Data)**
+The project started with a raw dataset containing one row per order, with fields for Order Date, Region, City, Category, Product, Quantity, Unit Price, Total Price, and Salesperson.
 
-## Key insights
+**2. The Output (Interactive Dashboard Engine)**
+Using engineered date fields, PivotTables, and PivotCharts, those rows were compressed into a single gridline-free executive canvas — a uniform-background dashboard sheet combining four charts and one summary table into one view.
 
-- **Trend:** Monthly revenue ranged from a low of $926 (Feb) to a peak of $2,309 (Jun), with a generally choppy but upward-leaning pattern across the year. Total revenue for the period: **$17,989**.
+![Dashboard](dashboard_view.png)
+
+## 🛠️ Technical Workflow & Implementation Details
+
+**1. Data Ingestion & Feature Engineering**
+Converted the initial range (`A1:I23` and beyond) into a formatted Excel Table with headers, so PivotTables and charts would refresh dynamically as rows are added. Engineered a temporal `Month` dimension in a new column using:
+```
+=TEXT(A2, "mmm")
+```
+then filled the formula down the table to extract a three-letter month label from every order date.
+
+**2. Sales by Month**
+Built a PivotTable (`TotalPrice` → Values, `Month` → Rows) on a new sheet, *Sales by Month*. Formatted values as currency with 0 decimal places, then inserted a line chart beside the PivotTable. Reset the chart's vertical axis minimum from 0 to 500 to make the monthly trend easier to read.
+
+**3. Sales by Salesperson**
+Built a second PivotTable (`TotalPrice` → Values, `Salesperson` → Rows), formatted as currency, sorted largest to smallest. Inserted a clustered bar chart and set the vertical axis categories to display in reverse order, so the top performer appears at the top of the chart.
+
+**4. Items Sold by Category**
+Built a PivotTable (`Quantity` → Values, `Category` → Rows) with the value display changed to "% of Grand Total," then visualized as a pie chart showing each category's share of total units sold.
+
+**5. Sales Profit by City**
+Built a PivotTable (`TotalPrice` → Values, `City` → Rows) and visualized as a pie chart showing each city's share of total revenue.
+
+**6. Sales by Product Type**
+Built a final PivotTable (`Quantity` → Values, `Product` → Rows) on its own sheet, used as a supporting summary table on the dashboard.
+
+**7. Dashboard Assembly**
+Created a new sheet, selected the entire sheet (Ctrl+A) and applied a uniform fill color as a clean background, then placed the four charts (Sales by Month, Sales by Salesperson, Items Sold by Category, Sales Profit by City) and a copy of the Sales by Product Type table onto a single executive view.
+
+## 📈 Key Insights
+
+- **Trend:** Monthly revenue ranged from a low of $926 (Feb) to a peak of $2,309 (Jun), with a choppy but generally upward-leaning pattern across the year.
 - **Top performer:** Marc Williams led all salespeople with **$4,896** in sales, more than 50% ahead of the second-place rep, Emily Moore ($3,152).
 - **Category mix:** Cookies (43.5%) and Bars (38.4%) together account for roughly 82% of all units sold; Crackers and Snacks make up the remainder.
 - **Geography:** Boston generated the largest share of profit at **36.1%**, followed by New York (29.0%), Los Angeles (22.9%), and San Diego (11.9%).
-- **Top product by volume:** Carrot was the best-selling product at 2,456 units, ahead of Arrowroot (1,220) and Oatmeal Raisin (1,281).
+- **Top product by volume:** Carrot was the best-selling product at 2,456 units, ahead of Oatmeal Raisin (1,281) and Arrowroot (1,220).
 
-## Skills demonstrated
+## 🧰 Skills Demonstrated
 
-PivotTables · PivotCharts (line, clustered bar, pie) · calculated text fields (`TEXT` function) · custom number formatting (currency, percentage) · chart axis customization · dashboard design and layout in Excel.
+PivotTables · PivotCharts (line, clustered bar, pie) · calculated date fields (`TEXT` function) · custom number formatting (currency, percentage) · chart axis customization · dashboard design and layout in Excel.
 
-## Files
+## 📁 Repository Contents
 
-- `Sales_Performance_MIS_Dashboard.xlsx` — the full workbook with all sheets, PivotTables, and the dashboard
-- `screenshots/` — reference images of the dashboard and each supporting sheet
-
-## Screenshots
-
-Add the dashboard and sheet screenshots to a `screenshots/` folder in the repo and reference them here, for example:
-
-```markdown
-![Dashboard](screenshots/dashboard_view.png)
-```
+- `Sales_Performance_MIS_Dashboard.xlsx` — full workbook with all sheets, PivotTables, PivotCharts, and the dashboard
+- `dashboard_view.png` — screenshot of the final dashboard
+- `README.md` — this file
